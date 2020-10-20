@@ -1,4 +1,4 @@
-# Develop Smell
+# Develop Smell (커뮤니티성 개발블로그)
 
 ## Member
 
