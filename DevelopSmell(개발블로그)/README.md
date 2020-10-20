@@ -3,10 +3,9 @@
 ## Member
 
 ##### Team 4Men
-* Front-End
+* Front-End + Back-End
   * 전병규 (팀장)
   * 이석기
-* Back-End
   * 윤영현
   * 장진우
 
