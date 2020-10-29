@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ssafy.happyhouse.auth.dao.AuthDao">
+
+	 <select id="authenticateUser" parameterType="com.ssafy.happyhouse.auth.dto.MemberUser" resultType="com.ssafy.happyhouse.auth.dto.MemberUser">
+		SELECT 
+			`username`, `name`, `email`, `password` 
+		FROM 
+			`vueusers`
+		WHERE 
+			`username`=#{username}
+		AND
+			`password`=#{password}
+	</select>
+
+	<select id="getUser" parameterType="java.lang.String" resultType="com.ssafy.happyhouse.auth.dto.MemberUser">
+		SELECT 
+			`username`, `name`, `email` 
+		FROM 
+			`vueusers`
+		WHERE 
+			`username`=#{word}
+		OR
+			`email`=#{word}
+	</select>
+  
+	<insert id="registerUser" parameterType="com.ssafy.happyhouse.auth.dto.MemberUser">
+		INSERT INTO `vueusers`(
+			`username`, `name`, `email`, `password`
+		)
+		VALUES(
+			#{username}, #{name}, #{email}, #{password}
+		)
+	</insert>
+    
+    <update id="modifyUserInfo" parameterType="com.ssafy.happyhouse.auth.dto.MemberUser">
+    	UPDATE `vueusers`
+    	SET
+    		`email`=#{email},
+    		`name`=#{name}
+    	WHERE
+    		`username`=#{username}
+    </update>
+    
+    <update id="modifyPassword" parameterType="com.ssafy.happyhouse.auth.dto.MemberUser">
+    	UPDATE `vueusers`
+    	SET
+    		`password`=#{password},
+    	WHERE
+    		`username`=#{username}
+    </update>
+    
+    <delete id="removeUser" parameterType="java.lang.String">
+    	DELETE FROM
+   			`vueusers`
+   		WHERE
+   			`username`=#{username}
+    </delete>
+    
+</mapper>

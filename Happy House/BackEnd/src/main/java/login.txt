@@ -1,0 +1,15 @@
+ CREATE TABLE `vueusers` (
+  `username` varchar(15) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`username`),
+  UNIQUE KEY `uk_users_email` (`email`)
+) ;
+
+   
+   
+   
+   

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.happyhouse.repo.DealRepo">
+
+	<select id="selectListDistrictInfoByKeyword" resultType="com.ssafy.happyhouse.dto.DistrictInfo">
+		SELECT
+			`district_code` AS `districtCode`,
+			`district`
+		FROM
+			`district_info`
+		WHERE
+			`district` LIKE CONCAT('%', #{keyword}, '%')
+		LIMIT
+			#{offset}, #{records}
+	</select>
+	
+	<select id="selectCountDistrictInfoByKeyword" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			`district_info`
+		WHERE
+			`district` LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+
+	<select id="selectListAptInfoByDistrictCode" resultType="com.ssafy.happyhouse.dto.AptInfo">
+		SELECT
+			a.`apt_id` AS 'aptId',
+			a.`district_code` AS `districtCode`,
+			d.`district`,
+			a.`bunji`,
+			a.`bonbun`,
+			a.`bubun`,
+			a.`apt_name` AS 'aptName',
+			a.`build_year` AS 'buildYear',
+			a.`road_name_address` AS 'roadNameAddress'
+		FROM
+			`apt_info` a
+		JOIN
+			`district_info` d
+		ON
+			a.`district_code` = d.`district_code`
+		WHERE
+			a.`district_code` = #{districtCode}
+		LIMIT
+			#{offset}, #{records}
+	</select>
+	
+	<select id="selectCountAptInfoByDistrictCode" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			`apt_info`
+		WHERE
+			`district_code` = #{districtCode}
+	</select>
+	
+	<select id="selectListDealInfoByAptId" resultType="com.ssafy.happyhouse.dto.DealInfo">
+		SELECT
+			d.`deal_id` AS 'dealId',
+			d.`apt_id` AS 'aptId',
+			a.`apt_name` AS 'aptName',
+			d.`area`,
+			d.`deal_year` AS 'dealYear',
+			d.`deal_month` AS 'dealMonth',
+			d.`deal_day` AS 'dealDay',
+			d.`deal_amount` AS 'dealAmount',
+			d.`floor`
+		FROM
+			`deal_info` d
+		JOIN 
+			`apt_info` a
+		ON
+			d.`apt_id` = a.`apt_id`
+		WHERE
+			d.`apt_id` = #{aptId}
+		ORDER BY
+			d.`deal_year` DESC,
+			d.`deal_month` DESC,
+			d.`deal_day` DESC
+		LIMIT
+			#{offset}, #{records}
+	</select>
+	
+	<select id="selectCountDealInfoByAptId" resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			`deal_info`
+		WHERE
+			`apt_id` = #{aptId}
+	</select>
+	
+	<insert id="insertGeocodingError">
+		INSERT ignore INTO `geocoding_error`(`status`, `apt_id`)
+		VALUES(
+			#{status},
+			#{aptId}
+		)
+	</insert>
+	
+	<select id="selectListDistrictInfoByHangul" resultType="com.ssafy.happyhouse.dto.DistrictInfo">
+		SELECT
+			`district_code` AS 'districtCode',
+			`district`
+		FROM
+			`district_info`
+		WHERE
+			`hangul` LIKE CONCAT('%', #{hangul}, '%')
+		LIMIT
+			0, 10
+	</select>
+	
+	<select id="selectListStatisticsByAptId" resultType="com.ssafy.happyhouse.dto.DealHelper">
+		SELECT
+			deal_year AS dealYear, 
+			avg(deal_amount) AS avgAmount, 
+			max(deal_amount) AS maxAmount, 
+			min(deal_amount) AS minAmount
+		FROM
+			deal_info
+		WHERE
+			apt_id = #{aptId} 
+		GROUP BY 
+			deal_year;
+	</select>
+	
+	
+</mapper>
+
