@@ -13,8 +13,8 @@ public class AuthServiceImpl implements AuthService {
 	private AuthDaoImpl authDao;
 	
 	@Override
-	public String authenticateUser(MemberUser memberUser) {
-		return authDao.authenticateUser(memberUser);
+	public String authenticateUser(MemberUser signInRequest) {
+		return authDao.authenticateUser(signInRequest);
 	}
 
 	@Override
@@ -30,14 +30,14 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	@Transactional
-	public boolean modifyUserInfo(MemberUser modifyRequest) {
-		return authDao.modifyUserInfo(modifyRequest);
+	public boolean modifyUserInfo(MemberUser chgInfoRequest) {
+		return authDao.modifyUserInfo(chgInfoRequest);
 	}
 	
 	@Override
 	@Transactional
-	public boolean modifyPassword(MemberUser modifyRequest) {
-		return authDao.modifyPassword(modifyRequest);
+	public boolean modifyPassword(MemberUser chgPwRequest) {
+		return authDao.modifyPassword(chgPwRequest);
 	}
 	
 	@Override

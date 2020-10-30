@@ -47,7 +47,7 @@
     <update id="modifyPassword" parameterType="com.ssafy.happyhouse.auth.dto.MemberUser">
     	UPDATE `vueusers`
     	SET
-    		`password`=#{password},
+    		`password`=#{password}
     	WHERE
     		`username`=#{username}
     </update>

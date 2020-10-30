@@ -2,9 +2,6 @@
 <div id="app">
     <nav-bar></nav-bar>
     <search-section v-if="getNavFlag == 1"></search-section>
-    <template v-else-if="getNavFlag == 2">
-
-    </template>
     <notice-board v-else-if="getNavFlag == 3"></notice-board>
     <map-section></map-section>
 </div>

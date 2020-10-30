@@ -1,6 +1,5 @@
 package com.ssafy.happyhouse.auth.dao;
 
-//import java.rmi.server.UID;
 import java.util.Date;
 import java.util.UUID;
 
@@ -18,8 +17,8 @@ public class AuthDaoImpl {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public String authenticateUser(MemberUser memberUser) {
-		MemberUser member = sqlSession.selectOne(ns + "authenticateUser", memberUser);
+	public String authenticateUser(MemberUser signInRequest) {
+		MemberUser member = sqlSession.selectOne(ns + "authenticateUser", signInRequest);
 
 		if (member == null || member.getUsername() == null) {
 			return "";
@@ -44,23 +43,22 @@ public class AuthDaoImpl {
 		return sqlSession.selectOne(ns + "getUser", username);
 	}
 	
-	public boolean modifyUserInfo(MemberUser modifyRequest) {
-		MemberUser getUser = getUser(modifyRequest.getUsername());
-		System.out.println(getUser);
-		System.out.println(modifyRequest.getUsername());
-		if (getUser != null && getUser.getUsername().equals(modifyRequest.getUsername())) {
-			sqlSession.update(ns + "modifyUserInfo", modifyRequest);
+	public boolean modifyUserInfo(MemberUser chgInfoRequest) {
+		MemberUser getUser = getUser(chgInfoRequest.getUsername());
+
+		if (getUser != null && getUser.getUsername().equals(chgInfoRequest.getUsername())) {
+			sqlSession.update(ns + "modifyUserInfo", chgInfoRequest);
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public boolean modifyPassword(MemberUser modifyRequest) {
-		MemberUser getUser = getUser(modifyRequest.getUsername());
+	public boolean modifyPassword(MemberUser chgPwRequest) {
+		MemberUser getUser = getUser(chgPwRequest.getUsername());
 		
-		if (getUser != null && getUser.getUsername().equals(modifyRequest.getUsername())) {
-			sqlSession.update(ns + "modifyPassword", modifyRequest);
+		if (getUser != null && getUser.getUsername().equals(chgPwRequest.getUsername())) {
+			sqlSession.update(ns + "modifyPassword", chgPwRequest);
 			return true;
 		} else {
 			return false;

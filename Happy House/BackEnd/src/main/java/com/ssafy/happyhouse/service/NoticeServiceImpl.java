@@ -14,16 +14,11 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired
 	private NoticeRepo repo;
 
-//	@Override
-//	public List<Notice> selectAllNotice() {
-//		return repo.selectAllNotice();
-//	}
-	
 	@Override
 	public List<Notice> getListNotice(Integer pageNum) {
 		return repo.selectListNotice((pageNum - 1) * 10, 10);
 	}
-	
+
 	@Override
 	public Integer getCountNotice() {
 		return repo.selectCountNotice();
@@ -49,6 +44,4 @@ public class NoticeServiceImpl implements NoticeService {
 		return repo.deleteNotice(no);
 	}
 
-
-	
 }

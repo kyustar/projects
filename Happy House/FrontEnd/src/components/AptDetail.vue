@@ -104,53 +104,47 @@ export default {
                 console.log(error);
             });
         },
-        createGraph(data1) {
-            console.log(data1);
-            // 2. Use the margin convention practice 
+        createGraph(data) {
+            console.log(data);
+
             var margin = {top: 10, right: 50, bottom: 80, left: 50}
-            , width = 330 - margin.left - margin.right // Use the window's width 
-            , height = 330 - margin.top - margin.bottom; // Use the window's height
+            , width = 330 - margin.left - margin.right
+            , height = 330 - margin.top - margin.bottom;
 
-            // The number of datapoints
-            var n = data1.length;
+            var n = data.length;
 
-            // 5. X scale will use the index of our data
             var xScale = d3.scaleLinear()
-                .domain([2015, 2020]) // input
-                .range([0, width]); // output
+                .domain([2015, 2020])
+                .range([0, width]);
 
             var min = Number.MAX_SAFE_INTEGER;
-            for(let datum of data1){
+            for(let datum of data){
                 min = (datum.minAmount < min) ? datum.minAmount : min;
             }
 
             var max = Number.MIN_SAFE_INTEGER;
-            for(let datum of data1){
+            for(let datum of data){
                 max = (datum.maxAmount > max) ? datum.maxAmount : max;
             }
 
-            // 6. Y scale will use the randomly generate number 
             var yScale = d3.scaleLinear()
-                .domain([min - 5000, max + 5000]) // input 
-                .range([height, 0]); // output 
+                .domain([min - 5000, max + 5000])
+                .range([height, 0]);
 
-            // 7. d3's line generator
             var line = d3.line()
-                .x(function(d) { return xScale(d.dealYear); }) // set the x values for the line generator
-                .y(function(d) { return yScale(d.avgAmount); }) // set the y values for the line generator 
+                .x(function(d) { return xScale(d.dealYear); })
+                .y(function(d) { return yScale(d.avgAmount); })
 
             var maxLine = d3.line()
-                .x(function(d) { return xScale(d.dealYear); }) // set the x values for the line generator
-                .y(function(d) { return yScale(d.maxAmount); }) // set the y values for the line generator 
+                .x(function(d) { return xScale(d.dealYear); })
+                .y(function(d) { return yScale(d.maxAmount); })
 
             var minLine = d3.line()
-                .x(function(d) { return xScale(d.dealYear); }) // set the x values for the line generator
-                .y(function(d) { return yScale(d.minAmount); }) // set the y values for the line generator 
+                .x(function(d) { return xScale(d.dealYear); })
+                .y(function(d) { return yScale(d.minAmount); })
 
-            // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-            var dataset = d3.range(n).map(function(d, i) { return {"x": d.dealYear, "y": d.avgAmount } }) // eslint-disable-line no-unused-vars
+            var dataset = d3.range(n).map(function(d) { return {"x": d.dealYear, "y": d.avgAmount } }) // eslint-disable-line no-unused-vars
 
-            // 1. Add the SVG to the page and employ #2
             d3.select("svg").remove();
 
             var svg = d3.select("#graph").append("svg")
@@ -159,38 +153,34 @@ export default {
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            // 3. Call the x axis in a group tag
             svg.append("g")
                 .attr("class", "x axis")
                 .attr("transform", "translate(0," + height + ")")
-                .call(d3.axisBottom(xScale).ticks(6)); // Create an axis component with d3.axisBottom
+                .call(d3.axisBottom(xScale).ticks(6));
 
-            // 4. Call the y axis in a group tag
             svg.append("g")
                 .attr("class", "y axis")
-                .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
-
-            // 9. Append the path, bind the data, and call the line generator 
-            svg.append("path")
-                .datum(data1) // 10. Binds data to the line 
-                .attr("class", "line") // Assign a class for styling 
-                .attr("d", line); // 11. Calls the line generator 
+                .call(d3.axisLeft(yScale));
 
             svg.append("path")
-                .datum(data1) // 10. Binds data to the line 
-                .attr("class", "line-red") // Assign a class for styling 
-                .attr("d", maxLine); // 11. Calls the line generator
+                .datum(data)
+                .attr("class", "line")
+                .attr("d", line);
 
             svg.append("path")
-                .datum(data1) // 10. Binds data to the line 
-                .attr("class", "line-blue") // Assign a class for styling 
-                .attr("d", minLine); // 11. Calls the line generator    
+                .datum(data)
+                .attr("class", "line-red")
+                .attr("d", maxLine);
 
-            // 12. Appends a circle for each datapoint 
+            svg.append("path")
+                .datum(data)
+                .attr("class", "line-blue")
+                .attr("d", minLine);  
+
             svg.selectAll(".dot-min")
-                .data(data1)
-                .enter().append("circle") // Uses the enter().append() method
-                .attr("class", "dot-blue") // Assign a class for styling
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dot-blue")
                 .attr("cx", function(d) { return xScale(d.dealYear) })
                 .attr("cy", function(d) { return yScale(d.minAmount) })
                 .attr("r", 5)
@@ -198,9 +188,9 @@ export default {
                 .text(function(d) { return (d.minAmount*10000).toLocaleString()+"원"});
 
             svg.selectAll(".dot-avg")
-                .data(data1)
-                .enter().append("circle") // Uses the enter().append() method
-                .attr("class", "dot") // Assign a class for styling
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dot")
                 .attr("cx", function(d) { return xScale(d.dealYear) })
                 .attr("cy", function(d) { return yScale(d.avgAmount) })
                 .attr("r", 5)
@@ -208,9 +198,9 @@ export default {
                 .text(function(d) { return (d.avgAmount*10000).toLocaleString()+"원"});
 
             svg.selectAll(".dot-max")
-                .data(data1)
-                .enter().append("circle") // Uses the enter().append() method
-                .attr("class", "dot-red") // Assign a class for styling
+                .data(data)
+                .enter().append("circle")
+                .attr("class", "dot-red")
                 .attr("cx", function(d) { return xScale(d.dealYear) })
                 .attr("cy", function(d) { return yScale(d.maxAmount) })
                 .attr("r", 5)

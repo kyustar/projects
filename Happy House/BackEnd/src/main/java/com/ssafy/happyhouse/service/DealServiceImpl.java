@@ -40,7 +40,7 @@ public class DealServiceImpl implements DealService {
 
 	@Override
 	public List<DealInfo> getListDealInfoByAptId(Integer aptId, Integer pageNum) {
-		return repo.selectListDealInfoByAptId(aptId, (pageNum-1) * 10, 10);
+		return repo.selectListDealInfoByAptId(aptId, (pageNum - 1) * 10, 10);
 	}
 
 	@Override

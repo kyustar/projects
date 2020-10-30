@@ -94,7 +94,7 @@
 	</select>
 	
 	<insert id="insertGeocodingError">
-		INSERT ignore INTO `geocoding_error`(`status`, `apt_id`)
+		INSERT IGNORE INTO `geocoding_error`(`status`, `apt_id`)
 		VALUES(
 			#{status},
 			#{aptId}

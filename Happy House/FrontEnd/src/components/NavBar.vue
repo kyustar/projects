@@ -219,14 +219,10 @@ export default {
             })
         },
 
-
         openModifyModal() {
             axios({
-                method: 'POST',
-                url: 'http://localhost:9999/happyhouse/api/auth/users',
-                data: {
-                    username: this.$store.getters.username
-                }
+                method: 'GET',
+                url: 'http://localhost:9999/happyhouse/api/auth/users/' + this.$store.getters.username
             }).then((response) => {
                 document.querySelector("#musername").value=response.data.username;
                 document.querySelector("#mname").value=response.data.name;
@@ -302,7 +298,6 @@ export default {
     filter: invert(50%);
 }
 
-/* 대상이 중복될 경우 밑에 있는 스타일이 적용! */
 .selected img {
     filter: invert(100%);
 }
@@ -359,7 +354,6 @@ export default {
 .modal input {
     background-color: #323233;
     border: none;
-    /* border: 1px solid #007acc; */
     height: 40px;
     width: 400px;
     border-radius: 5px;

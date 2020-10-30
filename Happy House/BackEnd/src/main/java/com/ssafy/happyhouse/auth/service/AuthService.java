@@ -4,12 +4,15 @@ import com.ssafy.happyhouse.auth.dto.MemberUser;
 
 public interface AuthService {
 
-	public String authenticateUser(MemberUser memberUser);
+	public String authenticateUser(MemberUser signInRequest);
 
 	public boolean registerUser(MemberUser signUpRequest);
+
 	public MemberUser getUser(String username);
-	
-	public boolean modifyUserInfo(MemberUser modifyRequest);
-	public boolean modifyPassword(MemberUser modifyRequest);
+
+	public boolean modifyUserInfo(MemberUser chgInfoRequest);
+
+	public boolean modifyPassword(MemberUser chgPwRequest);
+
 	public boolean removeUser(String username);
 }

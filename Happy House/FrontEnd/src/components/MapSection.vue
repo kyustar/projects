@@ -325,8 +325,7 @@ export default {
                         position.aptInfo = apt;
                         positions.push(position);
                     } else {
-                        console.log(apt);
-                          axios({
+                        axios({
                             method: 'POST',
                             url: `http://localhost:9999/happyhouse/api/error/geocoding`,
                             data: {

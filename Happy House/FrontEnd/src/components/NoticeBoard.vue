@@ -1,6 +1,6 @@
 <template>
 <div id="notice-board">
-    <button id="flying-write-button" type="button" @click="openWriteModal()">작성</button>
+    <button id="flying-write-button" v-if="$store.state.username == 'admin'" type="button" @click="openWriteModal()">작성</button>
     <h3>공지사항</h3>
 
     <div id="write" class="modal modal-hidden">
@@ -42,9 +42,7 @@
             <button class="modal-button" type="button" @click="doModify">제출</button>
         </div>
     </div>
-
-
-
+    
     <div v-for="(notice, index) of getNoticeList" :key="index">
         <div class="head" @click="setSelectedNotice(notice.no)" :class="{'open': getSelectedNotice == notice.no}">
             <div class="head-up">
@@ -58,7 +56,7 @@
         </div>
         <div class="content" :class="{'hidden': notice.no != getSelectedNotice}">
             {{notice.content}}
-            <div id="admin-only" v-if="$store.state.username == 'admin' || $store.state.username == 'admin@ssafy.com'">
+            <div id="admin-only" v-if="$store.state.username == 'admin'">
                 <button class="admin-button" type="button" @click="openModifyModal(notice.no)">수정</button>
                 <button class="admin-button" type="button" @click="doDelete(notice.no)">삭제</button>
                 <div class="float-helper"></div>
@@ -219,7 +217,7 @@ export default {
 
 #flying-write-button {
     position: absolute;
-    left: 390px;
+    left: 380px;
     top: 10px;
     height: 30px;
     width: 50px;

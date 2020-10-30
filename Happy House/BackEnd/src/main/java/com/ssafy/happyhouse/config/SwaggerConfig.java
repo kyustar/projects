@@ -1,4 +1,5 @@
 package com.ssafy.happyhouse.config;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,19 +22,17 @@ public class SwaggerConfig {
 				.apiInfo(apiInfo())
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.ssafy.happyhouse.controller"))
-//				.apis(RequestHandlerSelectors.basePackage("com.ssafy.happyhouse.auth.controller"))
-				.paths(PathSelectors.ant("/api/**"))
-				.build();
+				.paths(PathSelectors.ant("/api/**")).build();
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("SSAFY API")
+		return new ApiInfoBuilder()
+				.title("SSAFY API")
 				.description("SSAFY API Reference for Developers")
 				.termsOfServiceUrl("https://edu.ssafy.com")
 				.license("SSAFY License")
-				.licenseUrl("ssafy@ssafy.com").version("1.0").build();
+				.licenseUrl("ssafy@ssafy.com")
+				.version("1.0").build();
 	}
 
 }
-
-
