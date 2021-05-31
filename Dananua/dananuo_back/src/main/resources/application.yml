@@ -1,0 +1,31 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /dananuo
+    
+    
+spring:
+  resources:
+    static-locations: classpath:/
+  
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 1MB
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://k3b105.p.ssafy.io:3306/dananuo
+    username: ssafy
+    password: ssafy
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
